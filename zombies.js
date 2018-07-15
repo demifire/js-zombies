@@ -8,6 +8,11 @@
  * @property {string} name
  */
 
+ class Item{
+   constructor(name){
+    this.name = name;
+   }
+ }
 
 /**
  * Class => Weapon(name, damage)
@@ -25,6 +30,12 @@
  * @property {number} damage
  */
 
+class Weapon extends Item {
+  constructor(name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
 
 /**
  * Weapon Extends Item Class
@@ -49,6 +60,12 @@
  * @property {number} energy
  */
 
+class Food extends Item{
+  constructor(name, energy){
+    super(name);
+    this.energy = energy
+  }
+}
 
 /**
  * Food Extends Item Class
@@ -79,7 +96,74 @@
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
+class Player{
+  constructor(name, health, strength, speed){
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+    this._pack = [];
+    this._maxHealth = health
+  }
+  getPack(){
+    return this._pack
+  }
+  getMaxHealth(){
+    return this._maxHealth
+  }
+  takeItem(item){
+    if(this._pack.length<3){
+      this._pack.push(item);
+      return true
+    }else{
+      console.log('POOP');
+      return false
+    }
+    
+  }
+  checkPack(){
+    console.log(this._pack)
+  }
+  discardItem(item){
+    if(this._pack.includes(item)){
+      const remove = this._pack.indexOf(item);
+      console.log(remove);
+      this._pack.splice(remove,1);
+      return true;
+    }else{
+      console.log('Nothing removed');
+      return false;
+    }
+}
+equip(itemToEquip) {
+  console.log(itemToEquip)
+  console.log(itemToEquip instanceof (Weapon));
+  if (itemToEquip instanceof (Weapon) === true) {
+    if (this.equipped === false) {
+    if (this._pack.includes(itemToEquip)) {
+      const equipThis = this._pack.indexOf(itemToEquip);
+      console.log(equipThis);
+      this._pack.splice(equipThis, 1);
+      this.equipped = itemToEquip;
+    }
+    } else {
+      this._pack.push(this.equipped);
+      if (this._pack.includes(itemToEquip)) {
+        const replaceWithThis = this._pack.indexOf(itemToEquip);
+        console.log(replaceWithThis);
+        this._pack.splice(replaceWithThis, 1);
+        this.equipped = itemToEquip;
+      }
+    }
+  } else {
+    console.log("Not a Weapon")
+  }
+  console.log("************");
+}
 
+}
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -110,6 +194,7 @@
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+
 
 
 /**
@@ -180,6 +265,7 @@
  */
 
 
+ 
 /**
  * Player Class Method => useItem(item)
  * -----------------------------
