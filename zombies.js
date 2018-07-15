@@ -105,7 +105,7 @@ class Player{
     this.isAlive = true;
     this.equipped = false;
     this._pack = [];
-    this._maxHealth = health
+    this._maxHealth = health;
   }
   getPack(){
     return this._pack
@@ -138,13 +138,10 @@ class Player{
     }
 }
 equip(itemToEquip) {
-  console.log(itemToEquip)
-  console.log(itemToEquip instanceof (Weapon));
   if (itemToEquip instanceof (Weapon) === true) {
     if (this.equipped === false) {
     if (this._pack.includes(itemToEquip)) {
       const equipThis = this._pack.indexOf(itemToEquip);
-      console.log(equipThis);
       this._pack.splice(equipThis, 1);
       this.equipped = itemToEquip;
     }
@@ -152,16 +149,52 @@ equip(itemToEquip) {
       this._pack.push(this.equipped);
       if (this._pack.includes(itemToEquip)) {
         const replaceWithThis = this._pack.indexOf(itemToEquip);
-        console.log(replaceWithThis);
         this._pack.splice(replaceWithThis, 1);
         this.equipped = itemToEquip;
       }
     }
   } else {
-    console.log("Not a Weapon")
   }
-  console.log("************");
 }
+
+eat(itemToEat) {
+      if (itemToEat instanceof (Food) === true) {
+        console.log(itemToEat);
+        if (this._pack.includes(itemToEat)) {
+          const thisFood = this._pack.indexOf(itemToEat);
+          console.log(thisFood);
+          console.log(this.health);
+          this.health += itemToEat.energy;
+          console.log(this.health);
+          if (this.health > this._maxHealth) {
+            this.health = this.getMaxHealth();
+          }
+          console.log(this.health);
+          this._pack.splice(thisFood, 1);
+        }
+      } else {
+        console.log("NOT EDIBLE");
+      }
+    }
+
+useItem(item){
+  if (item instanceof (Food) === true) {
+    this.eat(item);
+  }else{
+    this.equip(item);
+  }
+}
+
+equippedWith(){
+  if (this.equipped !== false){
+    console.log(this.name + ' ' + this.equipped);
+    return this.equipped.name;
+  }else{
+    console.log('Nothing equipped');
+    return false
+  }
+}
+
 
 }
 /**
@@ -265,7 +298,7 @@ equip(itemToEquip) {
  */
 
 
- 
+
 /**
  * Player Class Method => useItem(item)
  * -----------------------------
@@ -311,6 +344,15 @@ equip(itemToEquip) {
  * @property {boolean} isAlive      Default value should be `true`.
  */
 
+class Zombie {
+  constructor(health, strength, speed){
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.isAlive = true;
+  }
+}
 
 /**
  * Class => FastZombie(health, strength, speed)
@@ -327,6 +369,11 @@ equip(itemToEquip) {
  * @param {number} speed            The zombie's speed.
  */
 
+ class FastZombie extends Zombie {
+   constructor(health, strength, speed){
+     super(health, strength, speed)
+   }
+ }
 
 /**
  * FastZombie Extends Zombie Class
@@ -350,6 +397,11 @@ equip(itemToEquip) {
  * @param {number} speed            The zombie's speed.
  */
 
+class StrongZombie extends Zombie {
+  constructor(health, strength, speed){
+    super(health, strength, speed)
+  }
+}
 
 /**
  * StrongZombie Extends Zombie Class
@@ -373,6 +425,11 @@ equip(itemToEquip) {
  * @param {number} speed            The zombie's speed.
  */
 
+class RangedZombie extends Zombie {
+  constructor(health, strength, speed){
+    super(health, strength, speed)
+  }
+}
 
 /**
  * RangedZombie Extends Zombie Class
@@ -403,7 +460,11 @@ equip(itemToEquip) {
  */
 
 
-
+class ExplodingZombie extends Zombie {
+  constructor(health, strength, speed){
+    super(health, strength, speed)
+  }
+}
 
 /**
  * Sample run.
