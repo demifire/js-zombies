@@ -159,17 +159,12 @@ equip(itemToEquip) {
 
 eat(itemToEat) {
       if (itemToEat instanceof (Food) === true) {
-        console.log(itemToEat);
         if (this._pack.includes(itemToEat)) {
           const thisFood = this._pack.indexOf(itemToEat);
-          console.log(thisFood);
-          console.log(this.health);
           this.health += itemToEat.energy;
-          console.log(this.health);
           if (this.health > this._maxHealth) {
             this.health = this.getMaxHealth();
           }
-          console.log(this.health);
           this._pack.splice(thisFood, 1);
         }
       } else {
